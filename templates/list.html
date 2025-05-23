@@ -1,0 +1,15 @@
+<style>
+    li::after {
+        content: ";";
+    }
+
+    li:last-child::after {
+        content: ".";
+    }
+</style>
+<p>This set includes {{ sets|length }} items:</p>
+<ul>
+  {% for item in sets %}
+    <li>{{ item }}</li>
+  {% endfor %}
+</ul>
