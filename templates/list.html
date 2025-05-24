@@ -7,9 +7,13 @@
         content: ".";
     }
 </style>
-<p>This set includes {{ sets|length }} items:</p>
+{% if sets %}
+  <p>This set includes {{ sets|length }} items:</p>
 <ul>
   {% for item in sets %}
-    <li>{{ item }}</li>
+    <li>{{ item.upper() }}</li>
   {% endfor %}
 </ul>
+{% else %}
+  <p>No items to show...</p>
+{% endif %}
