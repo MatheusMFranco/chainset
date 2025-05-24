@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_restx import Api, Resource
 
 app = Flask(__name__)
@@ -14,6 +14,8 @@ ns = api.namespace('chainset', description='Chains of connected sets.')
 
 @app.route('/warning')
 def home():
-    return render_template('list.html', sets=['Typescript', 'Lotlin', 'Python'])
+    items = request.args.getlist('item')
+    return render_template('list.html', sets=items)
 
-app.run(port=8080)
+if __name__ == '__main__': # pragma: no cover
+    app.run(port=8080)
