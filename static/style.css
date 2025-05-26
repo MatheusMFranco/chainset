@@ -1,0 +1,11 @@
+* {
+    font-family: "Segoe UI", sans-serif;
+}
+
+li::after {
+    content: ";";
+}
+
+li:last-child::after {
+    content: ".";
+}

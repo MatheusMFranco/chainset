@@ -37,7 +37,7 @@ def create_map():
 
     maps.append(new_map)
 
-    return jsonify({'mensagem': 'Map created!', 'Map': new_map}), 201
+    return jsonify({'menssage': 'Map created!', 'Map': new_map}), 201
 
 
 if __name__ == '__main__': # pragma: no cover

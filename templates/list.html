@@ -1,11 +1,5 @@
 <style>
-    li::after {
-        content: ";";
-    }
-
-    li:last-child::after {
-        content: ".";
-    }
+  @import url("{{ url_for('static', filename='style.css') }}");
 </style>
 {% if sets %}
   <p>This set includes {{ sets|length }} items:</p>
