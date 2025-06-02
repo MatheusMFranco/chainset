@@ -20,3 +20,8 @@ def test_warning_route_returns_list(client):
     assert f'This set includes { len(items) } items:' in html
     for item in items:
         assert item.upper() in html
+
+def test_welcome_no_token(client):
+    response = client.get('/chainset/welcome')
+    assert response.status_code == 401
+    assert 'Token is away!' in response.get_json()['message']
