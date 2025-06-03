@@ -52,3 +52,9 @@ def test_create_map_missing_fields(client, missing_field):
     response = client.post('/chainset/maps', json=data)
     assert response.status_code == 400
     assert f'Field "{missing_field}" is required.' in response.get_json()['error']
+
+def test_login_success(client):
+    response = client.post('/chainset/login', json={'user': 'admin', 'password': 'admin'})
+    assert response.status_code == 200
+    token = response.get_json()['token']
+    assert token is not None
