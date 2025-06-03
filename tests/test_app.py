@@ -25,3 +25,17 @@ def test_welcome_no_token(client):
     response = client.get('/chainset/welcome')
     assert response.status_code == 401
     assert 'Token is away!' in response.get_json()['message']
+
+def test_create_map_success(client):
+data = {
+    'description': 'Mind map',
+    'shape': 'circle',
+    'border': 'solid',
+    'text': 'Start here'
+}
+response = client.post('/chainset/maps', json=data)
+assert response.status_code == 201
+res_data = response.get_json()
+assert res_data['message'] == 'Map created!'
+assert res_data['map']['description'] == data['description']
+assert len(maps) > 0
