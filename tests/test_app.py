@@ -1,5 +1,5 @@
 import pytest
-from app import app
+from app import app, maps
 
 @pytest.fixture
 def client():
@@ -27,15 +27,28 @@ def test_welcome_no_token(client):
     assert 'Token is away!' in response.get_json()['message']
 
 def test_create_map_success(client):
-data = {
-    'description': 'Mind map',
-    'shape': 'circle',
-    'border': 'solid',
-    'text': 'Start here'
-}
-response = client.post('/chainset/maps', json=data)
-assert response.status_code == 201
-res_data = response.get_json()
-assert res_data['message'] == 'Map created!'
-assert res_data['map']['description'] == data['description']
-assert len(maps) > 0
+    data = {
+        'description': 'Mind map',
+        'shape': 'circle',
+        'border': 'solid',
+        'text': 'Start here'
+    }
+    response = client.post('/chainset/maps', json=data)
+    assert response.status_code == 201
+    res_data = response.get_json()
+    assert res_data['message'] == 'Map created!'
+    assert res_data['map']['description'] == data['description']
+    assert len(maps) > 0
+
+@pytest.mark.parametrize('missing_field', ['description', 'shape', 'border', 'text'])
+def test_create_map_missing_fields(client, missing_field):
+    data = {
+        'description': 'Mind map',
+        'shape': 'circle',
+        'border': 'solid',
+        'text': 'Start here'
+    }
+    data.pop(missing_field)
+    response = client.post('/chainset/maps', json=data)
+    assert response.status_code == 400
+    assert f'Field "{missing_field}" is required.' in response.get_json()['error']
